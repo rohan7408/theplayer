@@ -36,7 +36,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WatchMe - Stream Movies & TV Series Online",
+  title: "The Player - Stream Movies & TV Series Online",
   description:
     "Explore, discover, and stream thousands of movies and TV shows in ultra high quality.",
 };
@@ -68,7 +68,7 @@ export default function RootLayout({
                       <Play className="size-3.5 fill-current ml-0.5" />
                     </div>
                     <span className="font-heading font-extrabold text-base text-foreground tracking-tight">
-                      Watch<span className="text-primary">Me</span>
+                      The <span className="text-primary">Player</span>
                     </span>
                     <span className="text-[11px] ml-2 text-muted-foreground/80">
                       © {new Date().getFullYear()} All rights reserved.

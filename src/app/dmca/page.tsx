@@ -4,8 +4,8 @@ import Link from "next/link"
 import { ArrowLeft, ShieldAlert, CheckCircle2 } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "DMCA Notice & Takedown Policy - WatchMe",
-  description: "Digital Millennium Copyright Act (DMCA) notice and copyright infringement takedown policy for WatchMe.",
+  title: "DMCA Notice & Takedown Policy - The Player",
+  description: "Digital Millennium Copyright Act (DMCA) notice and copyright infringement takedown policy for The Player.",
 }
 
 export default function DmcaPage() {
@@ -41,7 +41,7 @@ export default function DmcaPage() {
             Respecting Intellectual Property Rights
           </h2>
           <p>
-            <strong className="text-foreground">WatchMe</strong> is an index and discovery platform that provides links to media hosted on external third-party streaming servers. We do not host, store, or transmit video files on our own servers.
+            <strong className="text-foreground">The Player</strong> is an index and discovery platform that provides links to media hosted on external third-party streaming servers. We do not host, store, or transmit video files on our own servers.
           </p>
           <p>
             It is our policy to respond with prompt action to any formal infringement notices submitted in accordance with the Digital Millennium Copyright Act (DMCA) and international copyright legislation.
@@ -64,7 +64,7 @@ export default function DmcaPage() {
             {[
               "A physical or electronic signature of the copyright owner or person authorized to act on their behalf.",
               "Identification of the copyrighted work claimed to have been infringed.",
-              "Identification of the material that is claimed to be infringing, including specific URLs on WatchMe.",
+              "Identification of the material that is claimed to be infringing, including specific URLs on The Player.",
               "Contact information including your full legal name, email address, physical address, and telephone number.",
               "A statement that you have a good faith belief that use of the material is not authorized by the copyright owner, its agent, or the law.",
               "A statement that the information in the notification is accurate under penalty of perjury.",

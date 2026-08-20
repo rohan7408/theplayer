@@ -28,15 +28,15 @@ export async function generateMetadata({ params }: TvPageProps): Promise<Metadat
   try {
     const tv = await getTvDetails(id)
     return {
-      title: `${tv.name} (${new Date(tv.first_air_date || "").getFullYear() || "TV Series"}) - WatchMe`,
-      description: tv.overview || `Watch ${tv.name} online on WatchMe.`,
+      title: `${tv.name} (${new Date(tv.first_air_date || "").getFullYear() || "TV Series"}) - The Player`,
+      description: tv.overview || `Watch ${tv.name} online on The Player.`,
       openGraph: {
         images: tv.backdrop_path ? [getTmdbImageUrl(tv.backdrop_path, "original")] : [],
       },
     }
   } catch {
     return {
-      title: "TV Series Details - WatchMe",
+      title: "TV Series Details - The Player",
     }
   }
 }

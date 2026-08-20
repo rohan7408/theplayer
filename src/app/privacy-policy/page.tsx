@@ -4,8 +4,8 @@ import Link from "next/link"
 import { ArrowLeft, Lock } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - WatchMe",
-  description: "Privacy policy regarding local storage, cookies, and user privacy on WatchMe.",
+  title: "Privacy Policy - The Player",
+  description: "Privacy policy regarding local storage, cookies, and user privacy on The Player.",
 }
 
 export default function PrivacyPolicyPage() {
@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
           </h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          How we protect your privacy and handle data on WatchMe.
+          How we protect your privacy and handle data on The Player.
         </p>
       </div>
 
@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
             No Personal Data Collection
           </h2>
           <p>
-            <strong className="text-foreground">WatchMe</strong> is committed to user privacy. We do not require account registration, and we do not collect, store, or sell any personally identifiable information (PII) on our servers.
+            <strong className="text-foreground">The Player</strong> is committed to user privacy. We do not require account registration, and we do not collect, store, or sell any personally identifiable information (PII) on our servers.
           </p>
         </div>
 

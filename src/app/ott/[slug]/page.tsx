@@ -27,11 +27,11 @@ export async function generateMetadata({
 }: OttPageProps): Promise<Metadata> {
   const { slug } = await params
   const ott = OTT_LIST.find((o) => o.slug === slug)
-  if (!ott) return { title: "OTT Platform - WatchMe" }
+  if (!ott) return { title: "OTT Platform - The Player" }
 
   return {
-    title: `${ott.name} Movies & TV Shows - WatchMe`,
-    description: `Stream ${ott.name} streaming originals, series, and blockbuster movies on WatchMe. ${ott.description}`,
+    title: `${ott.name} Movies & TV Shows - The Player`,
+    description: `Stream ${ott.name} streaming originals, series, and blockbuster movies on The Player. ${ott.description}`,
   }
 }
 

@@ -92,7 +92,7 @@ export function Navbar() {
               <Play className="size-4.5 fill-current ml-0.5" />
             </div>
             <span className="font-heading font-extrabold text-xl tracking-tight">
-              Watch<span className="text-primary">Me</span>
+              The <span className="text-primary">Player</span>
             </span>
           </Link>
 
@@ -284,7 +284,7 @@ export function Navbar() {
                     <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md shadow-primary/20">
                       <Play className="size-4 fill-current ml-0.5" />
                     </div>
-                    <span className="font-heading font-bold text-lg">WatchMe</span>
+                    <span className="font-heading font-bold text-lg">The Player</span>
                   </SheetTitle>
                 </SheetHeader>
 

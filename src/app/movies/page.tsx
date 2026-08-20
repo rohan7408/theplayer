@@ -18,8 +18,8 @@ import type { Movie, TvShow } from "@/types/tmdb"
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  title: "Movies Catalog - WatchMe",
-  description: "Browse popular, top rated, and latest trending movies on WatchMe.",
+  title: "Movies Catalog - The Player",
+  description: "Browse popular, top rated, and latest trending movies on The Player.",
 }
 
 interface MoviesPageProps {

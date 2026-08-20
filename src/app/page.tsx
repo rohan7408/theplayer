@@ -12,7 +12,7 @@ import { ContinueWatchingRow } from "@/components/continue-watching-row"
 import type { Movie, TvShow } from "@/types/tmdb"
 
 export const metadata: Metadata = {
-  title: "WatchMe - Stream Movies & TV Series Online",
+  title: "The Player - Stream Movies & TV Series Online",
   description:
     "Discover and stream popular and trending movies and TV shows online in HD quality.",
 }

@@ -28,10 +28,10 @@ export async function generateMetadata({
 }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params
   const category = CATEGORIES_LIST.find((c) => c.slug === slug)
-  if (!category) return { title: "Category - WatchMe" }
+  if (!category) return { title: "Category - The Player" }
 
   return {
-    title: `${category.name} Movies & TV Series - WatchMe`,
+    title: `${category.name} Movies & TV Series - The Player`,
     description: `Stream the latest and top rated ${category.name} cinema online. ${category.description}`,
   }
 }

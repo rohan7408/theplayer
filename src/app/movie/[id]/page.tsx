@@ -31,12 +31,12 @@ export async function generateMetadata({
   try {
     const movie = await getMovieDetails(id)
     return {
-      title: `${movie.title} (${movie.release_date ? new Date(movie.release_date).getFullYear() : "Movie"}) - WatchMe`,
+      title: `${movie.title} (${movie.release_date ? new Date(movie.release_date).getFullYear() : "Movie"}) - The Player`,
       description:
         movie.overview ||
-        `Stream ${movie.title} online in high definition on WatchMe.`,
+        `Stream ${movie.title} online in high definition on The Player.`,
       openGraph: {
-        title: `${movie.title} - WatchMe`,
+        title: `${movie.title} - The Player`,
         description: movie.overview,
         images: movie.backdrop_path
           ? [getTmdbImageUrl(movie.backdrop_path, "original")]
@@ -45,7 +45,7 @@ export async function generateMetadata({
     }
   } catch {
     return {
-      title: "Movie - WatchMe",
+      title: "Movie - The Player",
     }
   }
 }

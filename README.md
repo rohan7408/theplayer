@@ -1,4 +1,4 @@
-# WatchMe - Modern Cinematic Streaming & Discovery Web App
+# The Player - Modern Cinematic Streaming & Discovery Web App
 
 A high-performance cinematic movie and TV series streaming and discovery web platform built with **Next.js 16 (App Router & Turbopack)**, **Tailwind CSS**, and **Lucide Icons**.
 
@@ -62,4 +62,4 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## ⚖️ Disclaimer
 
-WatchMe is developed solely as a personal, non-commercial portfolio project for educational demonstration. We do not host, store, or upload any multimedia files.
+The Player is developed solely as a personal, non-commercial portfolio project for educational demonstration. We do not host, store, or upload any multimedia files.

@@ -4,8 +4,8 @@ import Link from "next/link"
 import { ArrowLeft, Play, Sparkles, Film, ShieldCheck } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "About Us - WatchMe",
-  description: "Learn more about the WatchMe personal streaming and movie catalog project.",
+  title: "About Us - The Player",
+  description: "Learn more about The Player personal streaming and movie catalog project.",
 }
 
 export default function AboutPage() {
@@ -27,7 +27,7 @@ export default function AboutPage() {
             <Play className="size-4 fill-current ml-0.5" />
           </div>
           <h1 className="font-heading text-3xl sm:text-4xl font-extrabold tracking-tight">
-            About Watch<span className="text-primary">Me</span>
+            About The <span className="text-primary">Player</span>
           </h1>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -43,10 +43,10 @@ export default function AboutPage() {
             Our Mission & Project Vision
           </h2>
           <p>
-            <strong className="text-foreground">WatchMe</strong> is an experimental, non-commercial web project designed to provide an ultra-clean, intuitive, and high-performance movie and TV series discovery platform.
+            <strong className="text-foreground">The Player</strong> is an experimental, non-commercial web project designed to provide an ultra-clean, intuitive, and high-performance movie and TV series discovery platform.
           </p>
           <p>
-            Built with modern technologies including Next.js, Tailwind CSS, and embedded player integrations, WatchMe demonstrates responsive design, synchronized playback memory, dynamic filtering, and seamless multi-device media streaming.
+            Built with modern technologies including Next.js, Tailwind CSS, and embedded player integrations, The Player demonstrates responsive design, synchronized playback memory, dynamic filtering, and seamless multi-device media streaming.
           </p>
         </div>
 

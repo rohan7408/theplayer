@@ -56,11 +56,11 @@ export async function generateMetadata({
 }: GenrePageProps): Promise<Metadata> {
   const { slug } = await params
   const genre = GENRES_LIST.find((g) => g.slug === slug)
-  if (!genre) return { title: "Genre - WatchMe" }
+  if (!genre) return { title: "Genre - The Player" }
 
   return {
-    title: `${genre.name} Movies & TV Shows - WatchMe`,
-    description: `Stream the latest, top rated, and most popular ${genre.name} movies and TV series online on WatchMe.`,
+    title: `${genre.name} Movies & TV Shows - The Player`,
+    description: `Stream the latest, top rated, and most popular ${genre.name} movies and TV series online on The Player.`,
   }
 }
 

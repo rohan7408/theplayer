@@ -17,8 +17,8 @@ export async function generateMetadata({
 }: SearchPageProps): Promise<Metadata> {
   const { q } = await searchParams
   return {
-    title: q ? `Search results for "${q}" - WatchMe` : "Search Movies & TV - WatchMe",
-    description: "Search millions of movies and TV shows on WatchMe.",
+    title: q ? `Search results for "${q}" - The Player` : "Search Movies & TV - The Player",
+    description: "Search millions of movies and TV shows on The Player.",
   }
 }
 
