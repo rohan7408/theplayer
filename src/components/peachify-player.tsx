@@ -277,10 +277,7 @@ export function PeachifyPlayer({
           </div>
         )}
 
-        {/* Embedded Iframe
-            sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-popups allow-popups-to-escape-sandbox"
-            Omits allow-top-navigation to prevent rogue top-level parent redirects on production domains!
-        */}
+        {/* Embedded Iframe */}
         {iframeSrc && (
           <iframe
             key={iframeSrc}
@@ -288,7 +285,6 @@ export function PeachifyPlayer({
             title={title}
             className={cn("h-full w-full border-0", iframeClassName)}
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-popups allow-popups-to-escape-sandbox"
             allowFullScreen
             onLoad={() => setLoadedSrc(iframeSrc)}
           />
@@ -299,11 +295,11 @@ export function PeachifyPlayer({
       <div className="flex items-center justify-between flex-wrap gap-2 px-3 py-2 rounded-xl bg-card/30 border border-white/5 text-[11px] text-muted-foreground">
         <div className="flex items-center gap-1.5">
           <ShieldCheck className="size-3.5 text-primary shrink-0" />
-          <span>Top-level window redirection protection is active.</span>
+          <span>High-speed multi-server streaming active.</span>
         </div>
         <div className="flex items-center gap-1 text-primary">
           <Sparkles className="size-3" />
-          <span>If a stream buffers or shows ads, switch to Server 2 or Server 3 above.</span>
+          <span>If a server buffers or is slow, easily switch to another server above.</span>
         </div>
       </div>
     </div>
