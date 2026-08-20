@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Loader2, AlertCircle } from "lucide-react"
+import { Loader2, AlertCircle, Server, Sparkles, ShieldCheck } from "lucide-react"
 
 import {
   type PeachifyEmbedConfig,
@@ -10,6 +10,8 @@ import {
 } from "@/types/peachify"
 import { buildPeachifyUrl } from "@/lib/peachify"
 import { usePeachifyProgress } from "@/hooks/use-peachify-progress"
+import { STREAMING_SERVERS } from "@/lib/player-servers"
+import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 export interface PeachifyPlayerProps {
@@ -66,7 +68,7 @@ export interface PeachifyPlayerProps {
 
 /**
  * Video Player Component
- * Embeds video player inside a responsive, accessible iframe with automated progress syncing.
+ * Features Multi-Server Streaming, Anti-Top-Navigation Redirection Guard, and automated progress syncing.
  */
 export function PeachifyPlayer({
   config,
@@ -85,7 +87,9 @@ export function PeachifyPlayer({
   loadingFallback,
   errorFallback,
 }: PeachifyPlayerProps) {
-  // Track loaded src declaratively
+  const [selectedServerId, setSelectedServerId] = React.useState<string>(
+    STREAMING_SERVERS[0].id
+  )
   const [loadedSrc, setLoadedSrc] = React.useState<string>("")
 
   const handleInternalPlayerEvent = React.useCallback(
@@ -153,15 +157,29 @@ export function PeachifyPlayer({
     setSessionStartAt(initial)
   }
 
-  // Derive embed URL directly during render
+  // Derive embed URL based on active server
   let iframeSrc = ""
   let embedError: Error | null = null
 
   try {
-    iframeSrc = buildPeachifyUrl({
-      ...config,
-      startAt: config.startAt !== undefined ? config.startAt : sessionStartAt,
-    })
+    const activeServer =
+      STREAMING_SERVERS.find((s) => s.id === selectedServerId) ||
+      STREAMING_SERVERS[0]
+
+    if (activeServer.id === "server-1") {
+      iframeSrc = buildPeachifyUrl({
+        ...config,
+        startAt: config.startAt !== undefined ? config.startAt : sessionStartAt,
+      })
+    } else {
+      iframeSrc = activeServer.getUrl({
+        type: config.type,
+        mediaId: config.mediaId,
+        season: config.type === "tv" ? config.season : 1,
+        episode: config.type === "tv" ? config.episode : 1,
+        startAt: config.startAt !== undefined ? config.startAt : sessionStartAt,
+      })
+    }
   } catch (err) {
     embedError = err instanceof Error ? err : new Error(String(err))
   }
@@ -196,37 +214,98 @@ export function PeachifyPlayer({
   }
 
   return (
-    <div
-      className={cn(
-        "relative w-full overflow-hidden rounded-2xl bg-black shadow-lg border border-border/40",
-        aspectClass,
-        className
-      )}
-    >
-      {/* Loading Skeleton */}
-      {isLoading && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-card/90 backdrop-blur-xs text-muted-foreground transition-opacity">
-          {loadingFallback || (
-            <>
-              <Loader2 className="size-8 animate-spin text-primary" />
-              <p className="text-xs font-medium tracking-wide">Loading Media Player...</p>
-            </>
-          )}
+    <div className="space-y-3">
+      {/* Streaming Server Switcher Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl border border-white/5 bg-card/60 backdrop-blur-md text-xs">
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <Server className="size-3.5 text-primary" />
+          <span className="font-semibold text-foreground">Streaming Server:</span>
         </div>
-      )}
 
-      {/* Embedded Iframe */}
-      {iframeSrc && (
-        <iframe
-          key={iframeSrc}
-          src={iframeSrc}
-          title={title}
-          className={cn("h-full w-full border-0", iframeClassName)}
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write"
-          allowFullScreen
-          onLoad={() => setLoadedSrc(iframeSrc)}
-        />
-      )}
+        <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-0.5">
+          {STREAMING_SERVERS.map((server) => {
+            const isSelected = server.id === selectedServerId
+            return (
+              <button
+                key={server.id}
+                type="button"
+                onClick={() => setSelectedServerId(server.id)}
+                className={cn(
+                  "px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap text-xs",
+                  isSelected
+                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                    : "bg-black/40 border border-white/5 text-muted-foreground hover:text-foreground hover:bg-white/5"
+                )}
+              >
+                <span>{server.name}</span>
+                {server.badge && (
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      "text-[9px] px-1 py-0 border-0 uppercase font-mono",
+                      isSelected
+                        ? "bg-white/20 text-white"
+                        : "bg-primary/20 text-primary"
+                    )}
+                  >
+                    {server.badge}
+                  </Badge>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Video Player Frame with Anti-Top-Navigation Redirection Guard */}
+      <div
+        className={cn(
+          "relative w-full overflow-hidden rounded-2xl bg-black shadow-2xl border border-white/10",
+          aspectClass,
+          className
+        )}
+      >
+        {/* Loading Skeleton */}
+        {isLoading && (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-card/90 backdrop-blur-xs text-muted-foreground transition-opacity">
+            {loadingFallback || (
+              <>
+                <Loader2 className="size-8 animate-spin text-primary" />
+                <p className="text-xs font-medium tracking-wide">Connecting to Stream Server...</p>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Embedded Iframe
+            sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-popups allow-popups-to-escape-sandbox"
+            Omits allow-top-navigation to prevent rogue top-level parent redirects on production domains!
+        */}
+        {iframeSrc && (
+          <iframe
+            key={iframeSrc}
+            src={iframeSrc}
+            title={title}
+            className={cn("h-full w-full border-0", iframeClassName)}
+            allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-popups allow-popups-to-escape-sandbox"
+            allowFullScreen
+            onLoad={() => setLoadedSrc(iframeSrc)}
+          />
+        )}
+      </div>
+
+      {/* Streaming Tip Alert */}
+      <div className="flex items-center justify-between flex-wrap gap-2 px-3 py-2 rounded-xl bg-card/30 border border-white/5 text-[11px] text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+          <ShieldCheck className="size-3.5 text-primary shrink-0" />
+          <span>Top-level window redirection protection is active.</span>
+        </div>
+        <div className="flex items-center gap-1 text-primary">
+          <Sparkles className="size-3" />
+          <span>If a stream buffers or shows ads, switch to Server 2 or Server 3 above.</span>
+        </div>
+      </div>
     </div>
   )
 }
