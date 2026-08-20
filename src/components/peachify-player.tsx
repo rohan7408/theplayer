@@ -39,12 +39,6 @@ export interface PeachifyPlayerProps {
    */
   title?: string
   /**
-   * Iframe sandbox security restrictions.
-   * Default: "allow-scripts allow-same-origin allow-forms allow-presentation"
-   * (Strictly blocks popup new tabs and top-level ad redirects while allowing playback).
-   */
-  sandbox?: string
-  /**
    * Callback fired when any PLAYER_EVENT is received
    */
   onPlayerEvent?: (payload: PeachifyPlayerEventPayload) => void
@@ -72,7 +66,7 @@ export interface PeachifyPlayerProps {
 
 /**
  * Video Player Component
- * Embeds video player inside a responsive, accessible iframe with automated progress syncing and ad-popup blocking.
+ * Embeds video player inside a responsive, accessible iframe with automated progress syncing.
  */
 export function PeachifyPlayer({
   config,
@@ -81,7 +75,6 @@ export function PeachifyPlayer({
   iframeClassName,
   aspectRatio = "16/9",
   title = "Video Player",
-  sandbox = "allow-scripts allow-same-origin allow-forms allow-presentation",
   onPlayerEvent,
   onMediaData,
   onPlay,
@@ -222,7 +215,7 @@ export function PeachifyPlayer({
         </div>
       )}
 
-      {/* Embedded Iframe with Anti-Ad-Redirect Sandbox */}
+      {/* Embedded Iframe */}
       {iframeSrc && (
         <iframe
           key={iframeSrc}
@@ -230,7 +223,6 @@ export function PeachifyPlayer({
           title={title}
           className={cn("h-full w-full border-0", iframeClassName)}
           allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write"
-          sandbox={sandbox}
           allowFullScreen
           onLoad={() => setLoadedSrc(iframeSrc)}
         />
