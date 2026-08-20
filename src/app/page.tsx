@@ -1,69 +1,89 @@
-import Image from "next/image";
+import * as React from "react"
+import type { Metadata } from "next"
 
-export default function Home() {
+import {
+  getTrending,
+  getPopularMovies,
+  getPopularTv,
+} from "@/lib/tmdb"
+import { HeroBanner } from "@/components/hero-banner"
+import { MediaRow } from "@/components/media-row"
+import { ContinueWatchingRow } from "@/components/continue-watching-row"
+import type { Movie, TvShow } from "@/types/tmdb"
+
+export const metadata: Metadata = {
+  title: "WatchMe - Stream Movies & TV Series Online",
+  description:
+    "Discover and stream popular and trending movies and TV shows online in HD quality.",
+}
+
+export default async function HomePage() {
+  // Fetch only essential trending and popular catalogs
+  const [trendingRes, popularMoviesRes, popularTvRes] =
+    await Promise.allSettled([
+      getTrending("all", "day"),
+      getPopularMovies(),
+      getPopularTv(),
+    ])
+
+  const trendingItems =
+    trendingRes.status === "fulfilled" ? trendingRes.value.results || [] : []
+  const popularMovies =
+    popularMoviesRes.status === "fulfilled" ? popularMoviesRes.value.results || [] : []
+  const popularTv =
+    popularTvRes.status === "fulfilled" ? popularTvRes.value.results || [] : []
+
+  // Select top 6 high-rated trending items with backdrop images for the 30-second carousel
+  const featuredHeroes = trendingItems
+    .filter(
+      (item: Movie | TvShow) =>
+        Boolean(item.backdrop_path) &&
+        Boolean(item.overview && item.overview.trim().length > 20) &&
+        item.vote_average >= 6.0
+    )
+    .slice(0, 6)
+
+  const heroSlides = featuredHeroes.length > 0 ? featuredHeroes : trendingItems.slice(0, 5)
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="flex flex-col min-h-screen pb-16">
+      {/* Hero Showcase Billboard Carousel */}
+      {heroSlides.length > 0 && (
+        <section className="container mx-auto max-w-7xl px-4 sm:px-8 pt-4 sm:pt-6">
+          <HeroBanner items={heroSlides} />
+        </section>
+      )}
+
+      {/* Main Streaming Sections */}
+      <div className="container mx-auto max-w-7xl px-4 sm:px-8 pt-10 space-y-12">
+        {/* Continue Watching Section (Reactive from LocalStorage / Peachify) */}
+        <ContinueWatchingRow />
+
+        {/* 1. Trending Now */}
+        <MediaRow
+          title="Trending Today"
+          description="Most watched movies and shows today"
+          items={trendingItems}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        {/* 2. Popular Movies */}
+        <MediaRow
+          title="Popular Movies"
+          description="Fan-favorite blockbusters and top trending films"
+          items={popularMovies}
+          mediaType="movie"
+          viewAllHref="/movies?category=popular"
+        />
+
+        {/* 3. Popular TV Shows */}
+        <MediaRow
+          title="Popular TV Shows"
+          description="Binge-worthy series and trending TV shows"
+          items={popularTv}
+          mediaType="tv"
+          viewAllHref="/tv?category=popular"
+        />
+      </div>
     </div>
-  );
+  )
 }
