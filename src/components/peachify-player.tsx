@@ -68,7 +68,7 @@ export interface PeachifyPlayerProps {
 
 /**
  * Video Player Component
- * Features Multi-Server Streaming, Anti-Top-Navigation Redirection Guard, and automated progress syncing.
+ * Features Multi-Server Streaming, Pop-up Interception Shield, and automated progress syncing.
  */
 export function PeachifyPlayer({
   config,
@@ -91,6 +91,22 @@ export function PeachifyPlayer({
     STREAMING_SERVERS[0].id
   )
   const [loadedSrc, setLoadedSrc] = React.useState<string>("")
+
+  // Intercept any attempts by third-party scripts to trigger window.open popups via the parent scope
+  React.useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const originalOpen = window.open
+
+    window.open = function (...args) {
+      console.warn("[The Player] Intercepted unrequested popup window.open attempt:", args[0])
+      return null
+    }
+
+    return () => {
+      window.open = originalOpen
+    }
+  }, [])
 
   const handleInternalPlayerEvent = React.useCallback(
     (payload: PeachifyPlayerEventPayload) => {
@@ -257,7 +273,7 @@ export function PeachifyPlayer({
         </div>
       </div>
 
-      {/* Video Player Frame with Anti-Top-Navigation Redirection Guard */}
+      {/* Video Player Frame */}
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-2xl bg-black shadow-2xl border border-white/10",
@@ -277,7 +293,7 @@ export function PeachifyPlayer({
           </div>
         )}
 
-        {/* Embedded Iframe */}
+        {/* Embedded Iframe (Clean without sandbox attribute) */}
         {iframeSrc && (
           <iframe
             key={iframeSrc}
@@ -299,7 +315,7 @@ export function PeachifyPlayer({
         </div>
         <div className="flex items-center gap-1 text-primary">
           <Sparkles className="size-3" />
-          <span>If a server buffers or is slow, easily switch to another server above.</span>
+          <span>If a stream buffers, easily toggle between Server 1 and Server 2 above.</span>
         </div>
       </div>
     </div>

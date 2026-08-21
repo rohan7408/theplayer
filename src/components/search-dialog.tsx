@@ -68,15 +68,15 @@ export function SearchDialog() {
           <Button
             variant="outline"
             size="sm"
-            className="relative h-9 w-9 p-0 sm:h-9 sm:w-56 sm:justify-between sm:px-3 text-xs text-muted-foreground cursor-pointer"
+            className="relative h-9 w-9 p-0 md:h-9 md:w-52 lg:w-60 md:justify-between md:px-3 text-xs text-muted-foreground cursor-pointer rounded-xl bg-card/40 hover:bg-card/70 border-white/10 shrink-0"
           />
         }
       >
-        <span className="flex items-center gap-2">
-          <Search className="size-3.5" />
-          <span className="hidden sm:inline">Search movies, shows...</span>
+        <span className="flex items-center gap-2 min-w-0">
+          <Search className="size-3.5 shrink-0" />
+          <span className="hidden md:inline truncate">Search movies, shows...</span>
         </span>
-        <kbd className="hidden sm:inline-flex pointer-events-none h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+        <kbd className="hidden md:inline-flex pointer-events-none h-5 select-none items-center gap-0.5 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 shrink-0">
           <span className="text-xs">⌘</span>K
         </kbd>
       </DialogTrigger>

@@ -26,11 +26,18 @@ import {
   Rocket,
   Trophy,
   ShieldAlert,
+  ShieldCheck,
 } from "lucide-react"
 
 import { ModeToggle } from "@/components/mode-toggle"
 import { SearchDialog } from "@/components/search-dialog"
+import { LiveVisitorsBadge } from "@/components/live-visitors-badge"
 import { Button } from "@/components/ui/button"
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,7 +84,6 @@ export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   const navLinks = [
-    { href: "/", label: "Home", icon: Compass },
     { href: "/movies", label: "Movies", icon: Film },
     { href: "/tv", label: "TV Series", icon: Tv },
   ]
@@ -85,9 +91,9 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/80 backdrop-blur-xl transition-all">
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-8 gap-3">
-        {/* Brand Logo */}
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2.5 group">
+        {/* Brand Logo & Desktop Nav Links */}
+        <div className="flex items-center gap-4 xl:gap-6 min-w-0">
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
               <Play className="size-4.5 fill-current ml-0.5" />
             </div>
@@ -97,7 +103,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav Links & Dropdowns */}
-          <nav className="hidden lg:flex items-center gap-1 text-sm font-medium">
+          <nav className="hidden lg:flex items-center gap-0.5 text-sm font-medium">
             {navLinks.map((link) => {
               const isActive = pathname === link.href
               const Icon = link.icon
@@ -259,7 +265,30 @@ export function Navbar() {
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          {/* Live Active Visitors Counter */}
+          <LiveVisitorsBadge />
+
+          {/* AdBlocker Extension Suggestion */}
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <a
+                  href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-300 text-xs font-semibold transition-all cursor-pointer shadow-xs"
+                />
+              }
+            >
+              <ShieldCheck className="size-3.5" />
+              <span>Block Ads</span>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p className="text-xs">Install uBlock Origin Lite for 100% Ad-Free Streaming</p>
+            </TooltipContent>
+          </Tooltip>
+
           <SearchDialog />
           <ModeToggle />
 
@@ -280,15 +309,37 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent side="left" className="w-80 p-6 overflow-y-auto bg-card/95 backdrop-blur-2xl">
                 <SheetHeader className="p-0 mb-6">
-                  <SheetTitle className="flex items-center gap-2">
-                    <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md shadow-primary/20">
-                      <Play className="size-4 fill-current ml-0.5" />
-                    </div>
-                    <span className="font-heading font-bold text-lg">The Player</span>
-                  </SheetTitle>
+                  <div className="flex items-center justify-between gap-2">
+                    <SheetTitle className="flex items-center gap-2">
+                      <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md shadow-primary/20">
+                        <Play className="size-4 fill-current ml-0.5" />
+                      </div>
+                      <span className="font-heading font-bold text-lg">The Player</span>
+                    </SheetTitle>
+                    <LiveVisitorsBadge />
+                  </div>
                 </SheetHeader>
 
                 <div className="flex flex-col gap-6">
+                  {/* AdBlocker Mobile Banner */}
+                  <div className="p-3 rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 space-y-1.5">
+                    <div className="flex items-center gap-1.5 font-semibold text-xs text-foreground">
+                      <ShieldCheck className="size-4 text-emerald-400" />
+                      <span>Block Video Ads & Popups</span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground leading-snug">
+                      Install uBlock Origin Lite on Chrome for seamless ad-free streaming.
+                    </p>
+                    <a
+                      href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=en"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-full px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-semibold text-xs transition-colors border border-emerald-500/30 mt-1"
+                    >
+                      Get uBlock Origin Lite
+                    </a>
+                  </div>
+
                   {/* Primary Nav */}
                   <div className="flex flex-col gap-1">
                     {navLinks.map((link) => {
