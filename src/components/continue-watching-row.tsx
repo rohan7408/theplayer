@@ -46,8 +46,8 @@ export function ContinueWatchingRow() {
             : `/tv/${item.id}?season=${item.last_season_watched || 1}&episode=${item.last_episode_watched || 1}`
 
           const posterUrl = item.poster_path
-            ? getTmdbImageUrl(item.poster_path, "w500")
-            : (item.backdrop_path ? getTmdbImageUrl(item.backdrop_path, "w500") : null)
+            ? getTmdbImageUrl(item.poster_path, "w500", "poster")
+            : (item.backdrop_path ? getTmdbImageUrl(item.backdrop_path, "w500", "backdrop") : null)
 
           return (
             <div

@@ -61,7 +61,7 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
     ? new Date(tv.first_air_date).getFullYear()
     : "N/A"
   const rating = tv.vote_average ? tv.vote_average.toFixed(1) : null
-  const posterUrl = getTmdbImageUrl(tv.poster_path, "w500")
+  const posterUrl = getTmdbImageUrl(tv.poster_path, "w500", "poster")
   const cast = (tv.credits?.cast || []).slice(0, 10)
   const trailers = (tv.videos?.results || []).filter(
     (v: VideoTrailer) => v.site === "YouTube"
@@ -193,7 +193,7 @@ export default async function TvPage({ params, searchParams }: TvPageProps) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                   {cast.map((actor: CastMember) => {
                     const profileUrl = actor.profile_path
-                      ? getTmdbImageUrl(actor.profile_path, "w300")
+                      ? getTmdbImageUrl(actor.profile_path, "w300", "profile")
                       : null
 
                     return (

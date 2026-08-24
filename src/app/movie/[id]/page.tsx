@@ -81,7 +81,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
       : "N/A"
 
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null
-  const posterUrl = getTmdbImageUrl(movie.poster_path, "w500")
+  const posterUrl = getTmdbImageUrl(movie.poster_path, "w500", "poster")
   const cast = (movie.credits?.cast || []).slice(0, 10)
   const trailers = (movie.videos?.results || []).filter(
     (v: VideoTrailer) => v.site === "YouTube"
@@ -286,7 +286,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                   {cast.map((actor: CastMember) => {
-                    const profileUrl = getTmdbImageUrl(actor.profile_path, "w300")
+                    const profileUrl = getTmdbImageUrl(actor.profile_path, "w300", "profile")
                     return (
                       <div
                         key={actor.id}

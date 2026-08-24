@@ -153,8 +153,8 @@ export function HeroBanner({
       <div className="relative aspect-[4/5] sm:aspect-[16/9] md:aspect-[21/9] w-full min-h-[440px] sm:min-h-[480px] overflow-hidden">
         {slides.map((slide, idx) => {
           const isActive = idx === currentIndex
-          const backdropUrl = getTmdbImageUrl(slide.backdrop_path, "original")
-          const posterFallback = getTmdbImageUrl(slide.poster_path, "original")
+          const backdropUrl = getTmdbImageUrl(slide.backdrop_path, "original", "backdrop")
+          const posterFallback = getTmdbImageUrl(slide.poster_path, "original", "poster")
           const slideTitle =
             "title" in slide && slide.title
               ? slide.title

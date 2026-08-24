@@ -216,7 +216,7 @@ export function TvPlayerView({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {seasonEpisodes.map((ep) => {
               const isSelected = ep.episode_number === activeEpisodeNumber
-              const stillUrl = getTmdbImageUrl(ep.still_path, "w300")
+              const stillUrl = getTmdbImageUrl(ep.still_path, "w300", "still")
               const savedProgress =
                 progressStorage[
                   `tv-${tv.id}-s${activeSeasonNumber}-e${ep.episode_number}`

@@ -80,7 +80,8 @@ const tmdbQueue = new RequestQueue()
  */
 export function getTmdbImageUrl(
   path: string | null | undefined,
-  size: "w300" | "w500" | "w780" | "w1280" | "original" = "w500"
+  size: "w300" | "w500" | "w780" | "w1280" | "original" = "w500",
+  imageType?: "backdrop" | "poster" | "profile" | "still"
 ): string {
   if (!path) {
     return "/images/placeholder-poster.png"
@@ -88,7 +89,8 @@ export function getTmdbImageUrl(
   if (path.startsWith("http")) {
     return path
   }
-  return `https://image.tmdb.org/t/p/${size}${path}`
+  const url = `https://image.tmdb.org/t/p/${size}${path}`
+  return imageType ? `${url}?tmdb_type=${imageType}` : url
 }
 
 /**

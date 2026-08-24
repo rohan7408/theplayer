@@ -119,7 +119,7 @@ export function SearchDialog() {
                 const title = "title" in item && item.title ? item.title : ("name" in item ? item.name : "")
                 const date = "release_date" in item && item.release_date ? item.release_date : ("first_air_date" in item ? item.first_air_date : "")
                 const year = date ? new Date(date).getFullYear() : ""
-                const posterUrl = getTmdbImageUrl(item.poster_path, "w300")
+                const posterUrl = getTmdbImageUrl(item.poster_path, "w300", "poster")
                 const rating = item.vote_average ? item.vote_average.toFixed(1) : null
 
                 return (

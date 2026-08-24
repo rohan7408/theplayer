@@ -33,7 +33,7 @@ export function MediaCard({
   const date = "release_date" in item && item.release_date ? item.release_date : ("first_air_date" in item ? item.first_air_date : "")
   const year = date ? new Date(date).getFullYear() : ""
   const rating = item.vote_average ? item.vote_average.toFixed(1) : null
-  const posterUrl = getTmdbImageUrl(item.poster_path, "w500")
+  const posterUrl = getTmdbImageUrl(item.poster_path, "w500", "poster")
   const href = `/${type}/${item.id}`
 
   return (
